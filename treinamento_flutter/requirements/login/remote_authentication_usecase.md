@@ -13,10 +13,10 @@
 1. Sistema retorna mensagem de erro inesperada ✅
 
 > # Exceção - Resposta inválida
-1. Sistema retorna mensagem de erro inesperada
+1. Sistema retorna mensagem de erro inesperada 
 
 > # Exceção - Falha no Servidor
-1. Sistema retorna mensagem de erro inesperada
+1. Sistema retorna mensagem de erro inesperada ✅
 
 > # Exceção - Credênciais inválidas
 1. Sistema retorna mensagem informando que as credênciais estão erradas

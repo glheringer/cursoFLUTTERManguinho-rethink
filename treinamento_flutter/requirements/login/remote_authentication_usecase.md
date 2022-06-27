@@ -1,8 +1,8 @@
 # Remote Authentication Use Case
 
 > ## Caso de sucesso
-1. Sistema valida dados
-2. Sistema faz uma requisição para a URL da API de Login
+1. Sistema valida dados ✅
+2. Sistema faz uma requisição para a URL da API de Login ✅
 3. Sistema valida os dados recebidos pela API
 4. Sistema entrega os dados da conta do usuário
 
@@ -10,7 +10,7 @@
 1. Sistema retorna mensagem de erro inesperada
 
 > # Exceção - Dados inválidos
-1. Sistema retorna mensagem de erro inesperada
+1. Sistema retorna mensagem de erro inesperada ✅
 
 > # Exceção - Resposta inválida
 1. Sistema retorna mensagem de erro inesperada

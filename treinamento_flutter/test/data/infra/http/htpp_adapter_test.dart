@@ -6,7 +6,9 @@ import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
 import 'package:meta/meta.dart';
 
-class HttpAdapter {
+import 'package:treinamento_flutter/data/http/http_client.dart';
+
+class HttpAdapter implements HttpClient{
   final Client client;
 
   HttpAdapter(this.client);
@@ -17,11 +19,12 @@ class HttpAdapter {
     Map body,
   }) async {
     final headers = {
-      'content-type': 'aplication/json',
-      'accept': 'aplication/json'
+      'content-type': 'application/json',
+      'accept': 'application/json'
     };
     final jsonBody = body != null ? jsonEncode(body) : null;
-    await client.post(url, headers: headers, body: jsonBody ); //metodo que passa para o teste, construtor
+    final response = await client.post(url, headers: headers, body: jsonBody ); //metodo que passa para o teste, construtor
+    return jsonDecode(response.body);
   }
 }
 
@@ -39,6 +42,8 @@ void main() {
   });
   group('post', () {
     test('Should call post with correct values', () async {
+          when(client.post(any, body: anyNamed('body'), headers: anyNamed('headers'))).thenAnswer((_) async => Response('{"any_key":"any_value"}',200));
+  
       await sut.request(url: url, method: 'post', body : {'any_key' : 'any_value'}); //testando se  o body está vindo corretamente
 
       verify(client.post(
@@ -47,17 +52,27 @@ void main() {
         'content-type': 'application/json',
         'accept': 'application/json'
       },
-      body: '{"any_key" : "any_value"}',
+      body: '{"any_key":"any_value"}'
       ));
     });
 
       test('Should call post without body', () async {
+      when(client.post(any, body: anyNamed('body'), headers: anyNamed('headers'))).thenAnswer((_) async => Response('{"any_key":"any_value"}',200));
+
       await sut.request(url: url, method: 'post'); //testando caso nao seja passado um body
       verify(client.post(
       any,
       headers: anyNamed('headers'),
       
       ));
+    });
+
+     test('Should return data if post returns 200', () async {
+      when(client.post(any,headers: anyNamed('headers'))).thenAnswer((_) async => Response('{"any_key":"any_value"}',200));
+
+      final response = await sut.request(url: url, method: 'post'); 
+
+      expect(response,{'any_key':'any_value'});
     });
   });
 }

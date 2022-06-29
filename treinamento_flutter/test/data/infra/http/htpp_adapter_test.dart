@@ -20,7 +20,8 @@ class HttpAdapter {
       'content-type': 'aplication/json',
       'accept': 'aplication/json'
     };
-    await client.post(url, headers: headers, body: jsonEncode(body));
+    final jsonBody = body != null ? jsonEncode(body) : null;
+    await client.post(url, headers: headers, body: jsonBody ); //metodo que passa para o teste, construtor
   }
 }
 
@@ -38,14 +39,24 @@ void main() {
   });
   group('post', () {
     test('Should call post with correct values', () async {
-      await sut.request(url: url, method: 'post', body : {'any_key' : 'any_value'});
+      await sut.request(url: url, method: 'post', body : {'any_key' : 'any_value'}); //testando se  o body está vindo corretamente
 
-      verify(client.post(url, 
+      verify(client.post(
+      url, 
       headers: {
-        'content-type': 'aplication/json',
-        'accept': 'aplication/json'
+        'content-type': 'application/json',
+        'accept': 'application/json'
       },
-      body: 'body : {"any_key" : "any_value"}',
+      body: '{"any_key" : "any_value"}',
+      ));
+    });
+
+      test('Should call post without body', () async {
+      await sut.request(url: url, method: 'post'); //testando caso nao seja passado um body
+      verify(client.post(
+      any,
+      headers: anyNamed('headers'),
+      
       ));
     });
   });

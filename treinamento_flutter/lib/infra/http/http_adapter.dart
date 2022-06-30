@@ -20,7 +20,10 @@ class HttpAdapter implements HttpClient{
       'accept': 'application/json'
     };
     final jsonBody = body != null ? jsonEncode(body) : null;
-    final response = await client.post(url, headers: headers, body: jsonBody ); //metodo que passa para o teste, construtor
+    var response = Response('', 500);
+    if (method == 'post'){
+        response = await client.post(url, headers: headers, body: jsonBody ); //metodo que passa para o teste, construtor
+    }
     return _handleReponse(response);
   }
   Map _handleReponse(Response response){

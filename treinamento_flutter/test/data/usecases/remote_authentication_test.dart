@@ -1,5 +1,4 @@
 import 'package:faker/faker.dart';
-import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -100,7 +99,5 @@ void main() {
     final future = sut.auth(params);
 
       expect(future, throwsA(DomainError.unexpected));
-
-
   });
 }

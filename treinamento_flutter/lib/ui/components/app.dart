@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:treinamento_flutter/ui/pages/login_page.dart';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light); //Mudando a status bar do iphone para branca
+
     //Essa vai ser minha Main que eu usava anteriormente, apenas com outro nome
     final primaryColor = Color.fromARGB(255, 136, 14, 79);
     final primaryColorDark = Color.fromARGB(255, 96, 0, 39);

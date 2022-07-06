@@ -17,12 +17,14 @@ void main() {
     presenter = LoginPresenterSpy();
     emailErrorController = StreamController<String>();
 
-    when(presenter.emailErrorSteam).thenAnswer((_) => emailErrorController.stream);
+    when(presenter.emailErrorSteam)
+        .thenAnswer((_) => emailErrorController.stream);
 
     final loginPage = MaterialApp(home: LoginPage(presenter));
     await tester.pumpWidget(loginPage); //renderiza estado inicial da pagina
   }
-  tearDown((){
+
+  tearDown(() {
     emailErrorController.close();
   });
   testWidgets('Should load with correct initial state',
@@ -67,4 +69,29 @@ void main() {
     expect(find.text('any error'), findsOneWidget);
   });
 
+  testWidgets('Should present no error if email is valid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    emailErrorController.add(null);
+    await tester.pump();
+
+    expect(
+      find.descendant(of: find.bySemanticsLabel('Email'), matching: find.byType(Text)),
+      findsOneWidget,
+    );
+  });
+   
+  testWidgets('Should present no error if email is valid',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    emailErrorController.add(null);
+    await tester.pump();
+
+    expect(
+      find.descendant(of: find.bySemanticsLabel('Email'), matching: find.byType(Text)),
+      findsOneWidget,
+    );
+  });
 }

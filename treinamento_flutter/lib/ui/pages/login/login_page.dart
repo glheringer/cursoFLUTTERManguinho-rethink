@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
                           decoration: InputDecoration(
                             labelText: 'Senha',
                             icon: Icon(Icons.lock,color: Theme.of(context).primaryColorLight,),
-                            errorText: snapshot.data,
+                          errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
                           ),
                           obscureText: true,
                           onChanged: presenter.validatePassword,
@@ -53,9 +53,14 @@ class LoginPage extends StatelessWidget {
                       }
                     ),
                   ),
-                  RaisedButton(
-                    onPressed: null,
-                    child: Text('Entrar'.toUpperCase()),
+                  StreamBuilder<bool>(
+                    stream: presenter.isFormValidErroSteam,
+                    builder: (context, snapshot) {
+                      return RaisedButton(
+                        onPressed: snapshot.data == true ? () {} : null,
+                        child: Text('Entrar'.toUpperCase()),
+                      );
+                    }
                   ),
                   FlatButton.icon(
                     onPressed: () {},

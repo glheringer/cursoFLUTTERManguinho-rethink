@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:treinamento_flutter/ui/pages/login_page.dart';
+import 'package:treinamento_flutter/ui/pages/login/login_page.dart';
 
 class App extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: '4Dev',
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: LoginPage(null),
       theme: ThemeData(
           primaryColor: primaryColor,
           primaryColorDark: primaryColorDark,

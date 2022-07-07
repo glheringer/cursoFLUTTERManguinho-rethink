@@ -1,7 +1,9 @@
 abstract class LoginPresenter{
-  Stream get emailErrorSteam;
-  Stream get passwordErrorSteam;
-  Stream get isFormValidErroSteam;
+  Stream get emailErrorStream;
+  Stream get passwordErrorStream;
+  Stream get isFormValidStream;
+  Stream get isLoadingStream;
+
 
 
 

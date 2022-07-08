@@ -13,23 +13,24 @@ void main() {
   LoginPresenterSpy presenter;
   StreamController<String> emailErrorController;
   StreamController<String> passwordErrorController;
+  StreamController<String> mainErrorController;
   StreamController<bool> isFormValidController;
   StreamController<bool> isLoadingController;
-
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterSpy();
     emailErrorController = StreamController<String>();
     passwordErrorController = StreamController<String>();
+    mainErrorController = StreamController<String>();
     isFormValidController = StreamController<bool>();
     isLoadingController = StreamController<bool>();
-
-
 
     when(presenter.emailErrorStream)
         .thenAnswer((_) => emailErrorController.stream);
     when(presenter.passwordErrorStream)
         .thenAnswer((_) => passwordErrorController.stream);
+    when(presenter.mainErrorStream)
+        .thenAnswer((_) => mainErrorController.stream);
     when(presenter.isFormValidStream)
         .thenAnswer((_) => isFormValidController.stream);
     when(presenter.isLoadingStream)
@@ -42,9 +43,9 @@ void main() {
   tearDown(() {
     emailErrorController.close();
     passwordErrorController.close();
+    mainErrorController.close();
     isFormValidController.close();
     isLoadingController.close();
-
   });
   testWidgets('Should load with correct initial state',
       (WidgetTester tester) async {
@@ -97,11 +98,12 @@ void main() {
     await tester.pump();
 
     expect(
-      find.descendant(of: find.bySemanticsLabel('Email'), matching: find.byType(Text)),
+      find.descendant(
+          of: find.bySemanticsLabel('Email'), matching: find.byType(Text)),
       findsOneWidget,
     );
   });
-   
+
   testWidgets('Should present no error if email is valid',
       (WidgetTester tester) async {
     await loadPage(tester);
@@ -110,7 +112,8 @@ void main() {
     await tester.pump();
 
     expect(
-      find.descendant(of: find.bySemanticsLabel('Email'), matching: find.byType(Text)),
+      find.descendant(
+          of: find.bySemanticsLabel('Email'), matching: find.byType(Text)),
       findsOneWidget,
     );
   });
@@ -125,7 +128,6 @@ void main() {
     expect(find.text('any error'), findsOneWidget);
   });
 
-  
   testWidgets('Should present no error if passsword is valid',
       (WidgetTester tester) async {
     await loadPage(tester);
@@ -134,11 +136,12 @@ void main() {
     await tester.pump();
 
     expect(
-      find.descendant(of: find.bySemanticsLabel('Senha'), matching: find.byType(Text)),
+      find.descendant(
+          of: find.bySemanticsLabel('Senha'), matching: find.byType(Text)),
       findsOneWidget,
     );
   });
-   
+
   testWidgets('Should present no error if passsword is valid',
       (WidgetTester tester) async {
     await loadPage(tester);
@@ -147,7 +150,8 @@ void main() {
     await tester.pump();
 
     expect(
-      find.descendant(of: find.bySemanticsLabel('Senha'), matching: find.byType(Text)),
+      find.descendant(
+          of: find.bySemanticsLabel('Senha'), matching: find.byType(Text)),
       findsOneWidget,
     );
   });
@@ -162,7 +166,7 @@ void main() {
     final button = tester.widget<RaisedButton>(find.byType(RaisedButton));
     expect(button.onPressed, isNotNull);
   });
-   testWidgets('Should enable button if form is valid',
+  testWidgets('Should enable button if form is valid',
       (WidgetTester tester) async {
     await loadPage(tester);
 
@@ -173,8 +177,7 @@ void main() {
     expect(button.onPressed, null);
   });
 
-
-   testWidgets('Should enable button if form is valid',
+  testWidgets('Should enable button if form is valid',
       (WidgetTester tester) async {
     await loadPage(tester);
 
@@ -185,8 +188,7 @@ void main() {
 
     verify(presenter.auth()).called(1);
   });
-   testWidgets('Should present loading',
-      (WidgetTester tester) async {
+  testWidgets('Should present loading', (WidgetTester tester) async {
     await loadPage(tester);
 
     isLoadingController.add(true);
@@ -195,8 +197,7 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
-  testWidgets('Should hide loading',
-      (WidgetTester tester) async {
+  testWidgets('Should hide loading', (WidgetTester tester) async {
     await loadPage(tester);
 
     isLoadingController.add(true);
@@ -205,5 +206,15 @@ void main() {
     await tester.pump();
 
     expect(find.byType(CircularProgressIndicator), findsNothing);
+  });
+
+  testWidgets('Should present error message if authentication fails',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    mainErrorController.add('main error');
+    await tester.pump();
+
+    expect(find.text('main error'), findsOneWidget);
   });
 }

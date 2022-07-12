@@ -217,4 +217,14 @@ void main() {
 
     expect(find.text('main error'), findsOneWidget);
   });
+  
+  testWidgets('Should present error message if authentication fails',
+      (WidgetTester tester) async {
+    await loadPage(tester);
+
+    addTearDown(){
+      verify(presenter.dispose()).called(1);
+    }
+  });
+  
 }

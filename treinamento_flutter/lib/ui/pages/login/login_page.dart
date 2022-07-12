@@ -14,40 +14,20 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     widget.presenter.dispose();
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Builder(
         builder: (context) {
           widget.presenter.isLoadingStream.listen((isLoading) {
             if (isLoading) {
-              showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  child: SimpleDialog(
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Aguarde...',
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      )
-                    ],
-                  ));
+              showLoading(context);
             } else {
-              if (Navigator.canPop(context)) {
-                Navigator.of(context).pop();
-              }
+              hideLoading(context);
             }
           });
           widget.presenter.mainErrorStream.listen((error) {
@@ -58,8 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                   error,
                   textAlign: TextAlign.center,
                 ),
-              )
-              );
+              ));
             }
           });
           return SingleChildScrollView(
@@ -117,8 +96,9 @@ class _LoginPageState extends State<LoginPage> {
                           stream: widget.presenter.isFormValidStream,
                           builder: (context, snapshot) {
                             return RaisedButton(
-                              onPressed:
-                                  snapshot.data == true ? widget.presenter.auth : null,
+                              onPressed: snapshot.data == true
+                                  ? widget.presenter.auth
+                                  : null,
                               child: Text('Entrar'.toUpperCase()),
                             );
                           }),

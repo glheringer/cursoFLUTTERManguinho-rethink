@@ -6,5 +6,5 @@ import '../../../../ui/pages/pages.dart';
 
 
 Widget makeLoginPage(){
-  return LoginPage(makeLoginPresenter());
+  return LoginPage(makeGetxLoginPresenter());
 }

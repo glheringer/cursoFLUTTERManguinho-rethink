@@ -1,10 +1,10 @@
 import 'package:meta/meta.dart';
 
-import '../../domain/usescases/helpers/helpers.dart';
-import '../../domain/entities/entities.dart';
-import '../../domain/usescases/usecases.dart';
+import '../../../domain/usescases/helpers/helpers.dart';
+import '../../../domain/entities/entities.dart';
+import '../../../domain/usescases/usecases.dart';
 
-import '../http/http.dart';
+import '../../http/http.dart';
 import 'package:treinamento_flutter/data/models/models.dart';
 
 class RemoteAuthentication implements Authentication{

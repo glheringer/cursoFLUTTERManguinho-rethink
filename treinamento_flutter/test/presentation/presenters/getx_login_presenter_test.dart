@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 
 import 'package:treinamento_flutter/domain/entities/entities.dart';
 import 'package:treinamento_flutter/domain/usescases/helpers/helpers.dart';
+import 'package:treinamento_flutter/domain/usescases/save_current_account.dart';
 import 'package:treinamento_flutter/domain/usescases/usecases.dart';
 
 import 'package:treinamento_flutter/presentation/presenters/presenters.dart';
@@ -13,12 +14,16 @@ class ValidationSpy extends Mock implements Validation {}
 
 class AuthenticationSpy extends Mock implements Authentication {}
 
+class SaveCurrentAccountSpy extends Mock implements SaveCurrentAccount {}
+
 void main() {
   GetxLoginPresenter sut;
   AuthenticationSpy authentication;
+  SaveCurrentAccountSpy saveCurrentAccount;
   ValidationSpy validation;
   String email;
   String password;
+  String token;
 
   PostExpectation mockValiditionCall(String field) => when(validation.validate(
       field: field == null ? anyNamed('field') : field,
@@ -31,21 +36,30 @@ void main() {
   PostExpectation mockAuthenticationCall() => when(authentication.auth(any));
 
   void mockAuthentication() {
-    mockAuthenticationCall()
-        .thenAnswer((_) async => AccountEntity(faker.guid.guid()));
+    mockAuthenticationCall().thenAnswer((_) async => AccountEntity(token));
   }
 
   void mockAuthenticationError(DomainError error) {
     mockAuthenticationCall().thenThrow(error);
   }
 
+  PostExpectation mockSaveCurrenAccountCall() => when(saveCurrentAccount.save(any));
+
+  void mockSaveCurrenAccountError() {
+    mockSaveCurrenAccountCall().thenThrow(DomainError.unexpected);
+  }
+
   setUp(() {
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
+    saveCurrentAccount = SaveCurrentAccountSpy();
     sut = GetxLoginPresenter(
-        validation: validation, authentication: authentication);
+        validation: validation,
+        authentication: authentication,
+        saveCurrentAccount: saveCurrentAccount);
     email = faker.internet.email();
     password = faker.internet.password();
+    token = faker.guid.guid();
 
     mockAuthentication();
     mockValidation();
@@ -130,7 +144,28 @@ void main() {
     sut.validatePassword(password);
   });
 
-  test('Should call Authentication with correct values', () async {
+  test('Should call SaveCurrentAccount with correct values', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    await sut.auth();
+
+    verify(saveCurrentAccount.save(AccountEntity(token))).called(1);
+  });
+
+  test('Should emit UnexpectedError if SaveCurrentAccount fails ', () async {
+    mockSaveCurrenAccountError();
+
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    sut.mainErrorStream.listen(expectAsync1((error) =>
+        expect(error, 'Algo errado aconteceu. Tente novamente em breve.')));
+    await sut.auth();
+  });
+
+  test('Should call Authentication with correct value', () async {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
@@ -156,19 +191,19 @@ void main() {
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.mainErrorStream
-        .listen(expectAsync1((error) => expect(error, 'Credenciais inválidas.')));
+    sut.mainErrorStream.listen(
+        expectAsync1((error) => expect(error, 'Credenciais inválidas.')));
     await sut.auth();
   });
 
-    test('Should emit correct events on UnexpectedError ', () async {
+  test('Should emit correct events on UnexpectedError ', () async {
     mockAuthenticationError(DomainError.unexpected);
     sut.validateEmail(email);
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.mainErrorStream
-        .listen(expectAsync1((error) => expect(error,'Algo errado aconteceu. Tente novamente em breve.')));
+    sut.mainErrorStream.listen(expectAsync1((error) =>
+        expect(error, 'Algo errado aconteceu. Tente novamente em breve.')));
     await sut.auth();
   });
 }

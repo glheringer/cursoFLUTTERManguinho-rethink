@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
+import 'package:treinamento_flutter/domain/usescases/save_current_account.dart';
+
 
 import '../../ui/pages/pages.dart';
 
@@ -11,6 +13,7 @@ import '../protocols/protocols.dart';
 class GetxLoginPresenter extends GetxController implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
+  final SaveCurrentAccount saveCurrentAccount;
 
   String _email;
   String _password;
@@ -20,7 +23,6 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
   var _isFormValid = false.obs;
   var _isLoading = false.obs;
 
-
   Stream<String> get emailErrorStream => _emailError.stream;
   Stream<String> get passwordErrorStream => _passwordError.stream;
   Stream<String> get mainErrorStream => _mainError.stream;
@@ -28,7 +30,9 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
   Stream<bool> get isLoadingStream => _isLoading.stream;
 
   GetxLoginPresenter(
-      {@required this.validation, @required this.authentication});
+      {@required this.validation,
+      @required this.authentication,
+      @required this.saveCurrentAccount});
 
   void validateEmail(String email) {
     _email = email;
@@ -38,28 +42,28 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
 
   void validatePassword(String password) {
     _password = password;
-    _passwordError.value = validation.validate(field: 'password', value: password);
+    _passwordError.value =
+        validation.validate(field: 'password', value: password);
     _validateForm();
   }
 
-  void _validateForm(){
-     _isFormValid.value =  _emailError.value == null
-      && _passwordError.value == null
-      && _email != null
-      && _password != null;
+  void _validateForm() {
+    _isFormValid.value = _emailError.value == null &&
+        _passwordError.value == null &&
+        _email != null &&
+        _password != null;
   }
-  
+
   Future<void> auth() async {
     _isLoading.value = true;
     try {
-      await authentication.auth(
-          AuthenticationParams(email: _email, secret: _password));
+      final account = await authentication.auth(AuthenticationParams(email: _email, secret: _password));
+      await saveCurrentAccount.save(account);
     } on DomainError catch (error) {
       _mainError.value = error.description;
     }
     _isLoading.value = false;
   }
 
-  void dispose() {
-  }
+  void dispose() {}
 }

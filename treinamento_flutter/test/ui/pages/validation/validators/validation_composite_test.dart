@@ -42,6 +42,8 @@ void main() {
   });
 
   test('Should return null if all validations returns null or empty', () {
+    // mockValidation2('');
+
     final error = sut.validate(field: 'any_field', value: 'any_value');
 
     expect(error, null);

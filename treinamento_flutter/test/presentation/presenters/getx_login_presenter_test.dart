@@ -43,7 +43,8 @@ void main() {
     mockAuthenticationCall().thenThrow(error);
   }
 
-  PostExpectation mockSaveCurrenAccountCall() => when(saveCurrentAccount.save(any));
+  PostExpectation mockSaveCurrenAccountCall() =>
+      when(saveCurrentAccount.save(any));
 
   void mockSaveCurrenAccountError() {
     mockSaveCurrenAccountCall().thenThrow(DomainError.unexpected);
@@ -181,6 +182,16 @@ void main() {
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emits(true));
+
+    await sut.auth();
+  });
+
+  test('Should change page on sucess ', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    sut.navigateToStream
+        .listen(expectAsync1((page) => expect(page, '/surveys')));
 
     await sut.auth();
   });

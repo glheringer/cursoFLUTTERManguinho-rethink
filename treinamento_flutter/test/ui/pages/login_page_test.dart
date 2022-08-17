@@ -65,7 +65,11 @@ void main() {
       initialRoute: '/login',
       getPages: [
         GetPage(name: '/login', page: () => LoginPage(presenter)),
-        GetPage(name: '/any_route', page: () => Scaffold(body: Text('fake page'),)),
+        GetPage(
+            name: '/any_route',
+            page: () => Scaffold(
+                  body: Text('fake page'),
+                )),
       ],
     );
     await tester.pumpWidget(loginPage); //renderiza estado inicial da pagina
@@ -247,12 +251,27 @@ void main() {
 
   testWidgets('Should change page', (WidgetTester tester) async {
     await loadPage(tester);
-    
+
     navigateToController.add('/any_route');
     await tester.pumpAndSettle();
 
     expect(Get.currentRoute, '/any_route');
 
     expect(find.text('fake page'), findsOneWidget);
+  });
+
+  testWidgets('Should not change page', (WidgetTester tester) async {
+    await loadPage(tester);
+    //Garantir que continue na mesma rota
+
+    //passando uma pagina vazia
+    navigateToController.add('');
+    await tester.pump();
+
+    //passando nulo
+    navigateToController.add(null);
+    await tester.pump();
+
+    expect(Get.currentRoute, '/login');
   });
 }

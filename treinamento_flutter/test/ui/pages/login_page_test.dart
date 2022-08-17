@@ -62,9 +62,9 @@ void main() {
     initStreams();
     mockStreams();
     final loginPage = GetMaterialApp(
-      initialRoute: '/login',
+      initialRoute: '/',
       getPages: [
-        GetPage(name: '/login', page: () => LoginPage(presenter)),
+        GetPage(name: '/', page: () => LoginPage(presenter)),
         GetPage(
             name: '/any_route',
             page: () => Scaffold(
@@ -272,6 +272,6 @@ void main() {
     navigateToController.add(null);
     await tester.pump();
 
-    expect(Get.currentRoute, '/login');
+    expect(Get.currentRoute, '/');
   });
 }

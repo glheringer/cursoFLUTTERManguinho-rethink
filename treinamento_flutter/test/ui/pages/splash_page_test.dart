@@ -4,45 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
-import 'package:meta/meta.dart';
 
-class SplashPage extends StatelessWidget {
-  final SplashPresenter presenter; 
-
-  SplashPage({@required this.presenter});
-
-  @override
-  Widget build(BuildContext context) {
-    presenter.loadCurrentAccount();
-
-    return Scaffold(
-      appBar: AppBar(title: Text('4Dev')),
-      body: Builder(
-        builder: (context){
-            //8 - Ouvir a Stream
-            presenter.navigateToStream.listen((page) {
-              //9 - Criar a navegacao em si
-               if (page?.isNotEmpty == true) {
-                 Get.offAllNamed(page);
-                }
-            });
-          return Center(
-             child: CircularProgressIndicator(),
-          );
-        }
-      ),
-    );
-  }
-}
-
-abstract class SplashPresenter {
-  //5 - criando a Stream 
-  Stream<String> get navigateToStream;
-  Future<void> loadCurrentAccount();
-}
+import 'package:treinamento_flutter/ui/pages/pages.dart';
 
 class SplashPresenterSpy extends Mock implements SplashPresenter {}
-
 void main() {
   SplashPresenterSpy presenter;
   //2 - criar o controller
@@ -83,7 +48,7 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    verify(presenter.loadCurrentAccount()).called(1);
+    verify(presenter.checkAccount()).called(1);
   });
 
 

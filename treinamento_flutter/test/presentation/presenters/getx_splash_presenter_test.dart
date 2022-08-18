@@ -7,8 +7,6 @@ import 'package:treinamento_flutter/domain/usescases/usecases.dart';
 
 import 'package:treinamento_flutter/presentation/presenters/presenters.dart';
 
-
-
 class LoadCurrentAccountSpy extends Mock implements LoadCurrentAccount {}
 
 void main() {

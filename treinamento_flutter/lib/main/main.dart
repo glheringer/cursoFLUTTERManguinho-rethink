@@ -23,9 +23,9 @@ class App extends StatelessWidget {
       theme: makeAppTheme(),
       initialRoute: '/login',
       getPages: [
-        GetPage(name: '/', page: makeSplashPage),
-        GetPage(name: '/login', page: makeLoginPage),
-        GetPage(name: '/surveys', page: () => Scaffold(body: Text('Enquetes'),)),
+        GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
+        GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
+        GetPage(name: '/surveys', page: () => Scaffold(body: Text('Enquetes'),), transition: Transition.fade),
       ],
     );
   }

@@ -20,7 +20,7 @@ class GetxSplashPresenter implements SplashPresenter {
       _navigateTo.value = !account.isNull ? '/login' : '/surveys'; //remover ! para ir a tela de survey
     } catch (error) {
       //caso de error mandar para tela de login
-      _navigateTo.value = '/login';
     }
+      _navigateTo.value = '/login';
   }
 }

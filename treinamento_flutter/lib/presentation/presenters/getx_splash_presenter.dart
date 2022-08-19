@@ -12,12 +12,12 @@ class GetxSplashPresenter implements SplashPresenter {
 
   Stream<String> get navigateToStream => _navigateTo.stream;
 
-  Future<void> checkAccount() async {
-    await Future.delayed(Duration(seconds: 2));
+  Future<void> checkAccount({int durationInSeconds = 2}) async {
+    await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       final account = await loadCurrentAccount.load();
       //fazendo a navegação
-      _navigateTo.value = !account.isNull ? '/login' : '/surveys'; //remover ! para ir a tela de survey
+      _navigateTo.value = account.isNull ? '/login' : '/surveys'; //remover ! para ir a tela de survey
     } catch (error) {
       //caso de error mandar para tela de login
     }

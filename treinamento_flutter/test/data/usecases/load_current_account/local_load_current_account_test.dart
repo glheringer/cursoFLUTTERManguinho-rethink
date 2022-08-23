@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:treinamento_flutter/domain/entities/account_entity.dart';
-import 'package:treinamento_flutter/domain/usescases/helpers/helpers.dart';
+import 'package:treinamento_flutter/domain/helpers/helpers.dart';
 
 import 'package:treinamento_flutter/data/cache/cache.dart';
 import 'package:treinamento_flutter/data/usecases/usecases.dart';

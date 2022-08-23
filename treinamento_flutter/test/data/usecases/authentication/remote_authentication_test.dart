@@ -6,7 +6,8 @@ import 'package:treinamento_flutter/data/http/http.dart';
 import 'package:treinamento_flutter/data/usecases/usecases.dart';
 
 import 'package:treinamento_flutter/domain/usescases/authentication.dart';
-import 'package:treinamento_flutter/domain/usescases/helpers/helpers.dart';
+import 'package:treinamento_flutter/domain/helpers/helpers.dart';
+
 
 
 

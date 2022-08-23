@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:treinamento_flutter/presentation/protocols/protocols.dart';
+
 import 'package:treinamento_flutter/validation/validators/validators.dart';
 
 void main(){
@@ -21,7 +23,7 @@ void main(){
     });
 
     test('Should return null if email is invalid', (){
-      expect(sut.validate('guilherme.heringer'), 'Campo inválido');
+      expect(sut.validate('guilherme.heringer'), ValidationError.invalidField);
     });
   }
   

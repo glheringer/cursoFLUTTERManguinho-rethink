@@ -5,22 +5,21 @@ import '../../domain/usescases/usecases.dart';
 import '../../ui/pages/pages.dart';
 
 class GetxSplashPresenter implements SplashPresenter {
-  var _navigateTo = RxString();
   final LoadCurrentAccount loadCurrentAccount;
 
-  GetxSplashPresenter({@required this.loadCurrentAccount});
+  final _navigateTo = RxString();
 
   Stream<String> get navigateToStream => _navigateTo.stream;
+
+  GetxSplashPresenter({@required this.loadCurrentAccount});
 
   Future<void> checkAccount({int durationInSeconds = 2}) async {
     await Future.delayed(Duration(seconds: durationInSeconds));
     try {
       final account = await loadCurrentAccount.load();
-      //fazendo a navegação
-      _navigateTo.value = account.isNull ? '/login' : '/surveys'; //remover ! para ir a tela de survey
-    } catch (error) {
-      //caso de error mandar para tela de login
-    }
+      _navigateTo.value = account.isNull ? '/login' : '/surveys'; //Remover o ! para ir para a tela de surveys
+    } catch(error) {
       _navigateTo.value = '/login';
+    }
   }
 }

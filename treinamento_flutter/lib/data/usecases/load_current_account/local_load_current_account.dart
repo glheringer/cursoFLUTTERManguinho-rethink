@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:treinamento_flutter/data/cache/cache.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../../../domain/usescases/helpers/helpers.dart';
+import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usescases/usecases.dart';
 
 

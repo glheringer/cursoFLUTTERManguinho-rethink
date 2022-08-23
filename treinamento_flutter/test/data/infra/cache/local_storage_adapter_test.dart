@@ -60,13 +60,13 @@ void main() {
     });
 
     test('Should call  FetchSecure with correct value', () async {
-      await sut.fetchSecure(key: key);
+      await sut.fetchSecure(key);
 
       verify(secureStorage.read(key: key));
     });
 
     test('Should return correct value on sucess', () async{
-      final fetchedValue = await sut.fetchSecure(key: key);
+      final fetchedValue = await sut.fetchSecure(key);
 
       expect(fetchedValue, value);
     });
@@ -74,7 +74,7 @@ void main() {
     test('Should throw if SaveSecure throws', () async {
       mockLoadSecureError();
 
-       final future = sut.fetchSecure(key: key);
+       final future = sut.fetchSecure(key);
 
       expect(future, throwsA(isA<Exception>()));
     });

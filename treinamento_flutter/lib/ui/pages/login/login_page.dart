@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:treinamento_flutter/ui/helpers/helpers.dart';
 
-import 'package:treinamento_flutter/utils/i18n/i18n.dart';
+
+
 
 import '../../../ui/helpers/errors/errors.dart';
 import '../../components/components.dart';

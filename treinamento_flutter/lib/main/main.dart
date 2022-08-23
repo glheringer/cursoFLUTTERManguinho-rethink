@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:treinamento_flutter/utils/i18n/i18n.dart';
+import 'package:treinamento_flutter/ui/helpers/helpers.dart';
+
+
 
 import '../ui/components/components.dart';
 

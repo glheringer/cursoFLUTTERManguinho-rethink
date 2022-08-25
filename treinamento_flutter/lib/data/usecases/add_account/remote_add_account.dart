@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:meta/meta.dart';
+import 'package:treinamento_flutter/domain/helpers/helpers.dart';
 
 import '../../../domain/usescases/usecases.dart';
 import '../../http/http.dart';
@@ -12,7 +13,11 @@ class RemoteAddAccount {
 
   Future<void> add(AddAccountParams params) async {
     final body = RemoteAddAccountParams.fromDomain(params).toJson();
-    await httpClient.request(url: url, method: 'post', body: body);
+    try {
+      await httpClient.request(url: url, method: 'post', body: body);
+    } on HttpError {
+      throw DomainError.unexpected;
+    }
   }
 }
 

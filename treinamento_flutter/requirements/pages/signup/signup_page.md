@@ -14,8 +14,8 @@
 11. Mostrar mensagem de erro se o nome for inválido ✅
 12. Remover mensagem de erro se o nome for válido ✅
 13. Validar confirmação de senha quando o usuário digitar no campo ✅
-14. Mostrar mensagem de erro se a confirmação de senha for invalida
-15. Remover mensagem de erro se a confirmação de senha for valida
+14. Mostrar mensagem de erro se a confirmação de senha for invalida ✅
+15. Remover mensagem de erro se a confirmação de senha for valida ✅
 16. Habilitar o botão de criar conta se todos os campos
 17. Desabilitar o botão de criar conta se algum campo for invalido 
 18. Exibir loading no início da ação de criar conta

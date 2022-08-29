@@ -19,6 +19,6 @@
 16. Habilitar o botão de criar conta se todos os campos ✅
 17. Desabilitar o botão de criar conta se algum campo for invalido ✅
 18. Exibir loading no início da ação de criar conta
-19. Chamar o método de criar conta
+19. Chamar o método de criar conta ✅
 20. Exibir mensagem de erro caso a criação de conta falhe
 21. Esconder loading no fim da acão de criar conta

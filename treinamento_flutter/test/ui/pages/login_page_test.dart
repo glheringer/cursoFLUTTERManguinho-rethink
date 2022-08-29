@@ -9,7 +9,6 @@ import 'package:mockito/mockito.dart';
 import 'package:treinamento_flutter/ui/pages/pages.dart';
 import 'package:treinamento_flutter/ui/helpers/errors/errors.dart';
 
-
 class LoginPresenterSpy extends Mock implements LoginPresenter {}
 
 void main() {
@@ -123,7 +122,7 @@ void main() {
     expect(find.text('Campo inválido.'), findsOneWidget);
   });
 
-    testWidgets('Should present error if email is empty',
+  testWidgets('Should present error if email is empty',
       (WidgetTester tester) async {
     await loadPage(tester);
 
@@ -170,7 +169,9 @@ void main() {
 
     isFormValidController.add(true);
     await tester.pump();
-    await tester.tap(find.byType(RaisedButton));
+    final button = find.byType(RaisedButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
     await tester.pump();
 
     verify(presenter.auth()).called(1);
@@ -205,14 +206,15 @@ void main() {
     expect(find.text('Credenciais inválidas.'), findsOneWidget);
   });
 
-    testWidgets('Should present error message if authentication throws',
+  testWidgets('Should present error message if authentication throws',
       (WidgetTester tester) async {
     await loadPage(tester);
 
     mainErrorController.add(UIError.unexpected);
     await tester.pump();
 
-    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
+    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'),
+        findsOneWidget);
   });
 
   testWidgets('Should change page', (WidgetTester tester) async {

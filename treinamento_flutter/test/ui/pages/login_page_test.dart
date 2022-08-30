@@ -235,11 +235,11 @@ void main() {
     //passando uma pagina vazia
     navigateToController.add('');
     await tester.pump();
+    expect(Get.currentRoute, '/');
 
     //passando nulo
     navigateToController.add(null);
     await tester.pump();
-
     expect(Get.currentRoute, '/');
   });
 }

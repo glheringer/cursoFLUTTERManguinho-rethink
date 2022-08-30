@@ -85,10 +85,9 @@ void main() {
         .listen(expectAsync1((error) => expect(error, UIError.invalidField)));
     sut.isFormValidStream
         .listen(expectAsync1((isValid) => expect(isValid, false)));
-    
-    sut.validateName(name);
-    sut.validateName(name);
 
+    sut.validateName(name);
+    sut.validateName(name);
   });
 
   test('Should emit requiredFieldError if name is empty', () {
@@ -130,6 +129,17 @@ void main() {
     sut.validatePassword(password);
   });
 
+  test('Should emit invalidFieldError if password is invalid', () {
+    mockValidation(value: ValidationError.invalidField);
+
+    sut.passwordErrorStream
+        .listen(expectAsync1((error) => expect(error, UIError.invalidField)));
+    sut.isFormValidStream
+        .listen(expectAsync1((isValid) => expect(isValid, false)));
+
+    sut.validatePassword(password);
+    sut.validatePassword(password);
+  });
   test('Should emit null if password validation succeeds', () {
     sut.passwordErrorStream
         .listen(expectAsync1((error) => expect(error, null)));

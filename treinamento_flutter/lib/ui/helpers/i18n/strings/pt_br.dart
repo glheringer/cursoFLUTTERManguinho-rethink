@@ -1,6 +1,7 @@
 import 'translations.dart';
 
-class PtBr implements Translations { 
+class PtBr implements Translations {
+  String get msgEmailInUse => 'Email em uso.';
   String get msgInvalidCredentials => 'Credenciais inválidas.';
   String get msgInvalidField => 'Campo inválido.';
   String get msgRequiredField => 'Campo obrigatório.';
@@ -12,9 +13,9 @@ class PtBr implements Translations {
   String get login => 'Login';
   String get name => 'Nome';
   String get password => 'Senha';
-
 }
-enum UIError{
+
+enum UIError {
   requiredField,
   invalidField,
   unexpected,

@@ -16,9 +16,9 @@
 13. Notificar o nameErrorStream com null, caso o Validation não retorne erro ✅
 14. Não notificar o nameErrorStream se o valor for igual ao último ✅
 15. Notificar o isFormValidStream após alterar o nome ✅
-16. Chamar Validation ao alterar a confirmação de senha
-17. Notificar o passwordConfirmationErrorStream com o mesmo erro do Validation, caso retorne erro
-18. Notificar o passwordConfirmationErrorStream com null, caso o Validation não retorne erro
-19. Não notificar o passwordConfirmationErrorStream se o valor for igual ao último
-20. Notificar o isFormValidStream após alterar a confirmação de senha
+16. Chamar Validation ao alterar a confirmação de senha ✅
+17. Notificar o passwordConfirmationErrorStream com o mesmo erro do Validation, caso retorne erro ✅
+18. Notificar o passwordConfirmationErrorStream com null, caso o Validation não retorne erro ✅
+19. Não notificar o passwordConfirmationErrorStream se o valor for igual ao último ✅
+20. Notificar o isFormValidStream após alterar a confirmação de senha ✅
 21. Para o formulário estar válido todos os Streams de erro prarisam estar null e todos campos obrigatórios não
